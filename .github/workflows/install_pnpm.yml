@@ -1,3 +1,6 @@
+name: Install of pnpm node package manager
+run-name: installing pnpm
+
 on:
   - push
   - pull_request
