@@ -1,1 +1,2 @@
 criando um arquivo para testar o jira
+editando para fazer teste de integração
