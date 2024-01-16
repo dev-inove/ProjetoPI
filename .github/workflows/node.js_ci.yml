@@ -1,3 +1,4 @@
+
 name: Node.js CI
 
 on:
@@ -8,20 +9,27 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./backend
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x, 20.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
     steps:
     - uses: pnpm/action-setup@v2
       with:
           version: 8
     - uses: actions/checkout@v3
-    - name: Use Node.js 20
+    - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
-        node-version: 20
+        node-version: ${{ matrix.node-version }}
         cache: 'pnpm'
+        cache-dependency-path: './backend/pnpm-lock.yaml'
     - run: npm install -g pnpm
     - run: pnpm install
     - run: pnpm run build --if-present
