@@ -8,27 +8,20 @@ on:
 
 jobs:
   build:
+    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./backend
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [14.x, 16.x, 18.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
     - uses: pnpm/action-setup@v2
       with:
           version: 8
     - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js 20
       uses: actions/setup-node@v3
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 20
         cache: 'pnpm'
-        path: ./backend
     - run: npm install -g pnpm
     - run: pnpm install
     - run: pnpm run build --if-present
