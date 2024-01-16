@@ -8,6 +8,9 @@ on:
 
 jobs:
   build:
+    defaults:
+      run:
+        working-directory: ./backend
     runs-on: ubuntu-latest
 
     strategy:
@@ -25,6 +28,7 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'pnpm'
+        cache-dependency-path: './backend/pnpm-lock.yaml'
     - run: npm install -g pnpm
     - run: pnpm install
     - run: pnpm run build --if-present
